@@ -1,6 +1,6 @@
 import Login from "./Login"
 import PostsList from "./PostsList"
-import RegisterForm from "./RegisterForm"
+import Registration from "./Registeration"
 
 
 
@@ -9,7 +9,7 @@ function App() {
   
   <>
   <Login />
-  <RegisterForm />
+  <Registration />
   <PostsList />
   </>
     
