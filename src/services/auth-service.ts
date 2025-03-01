@@ -13,16 +13,19 @@ export interface RegisterData {
     email: string;
     password: string;
     photo: string;
-    
 }
 
 const authRegister = (registration: RegisterData) => {
     const controller = new AbortController();
-    const request = apiClient.post<RegistrationResponseData>("/auth/register", 
+    const request = apiClient.post<RegistrationResponseData>("/users/register", 
         registration, 
         { signal: controller.signal }
     );
     return { request, cancel: () => controller.abort() };
 }
 
-export default {authRegister};
+const authGoogleLogin = () => {
+    window.location.href = "http://localhost:3003/users/google"; // הפניה ישירה לאימות
+};
+
+export default { authRegister, authGoogleLogin };

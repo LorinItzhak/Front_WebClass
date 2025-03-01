@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Logopic from '../assets/logo.png';
 
 

@@ -4,23 +4,31 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import avatarImg from "../assets/avatar.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
+import { faImage, faPen } from "@fortawesome/free-solid-svg-icons";
 import { Dropdown } from "react-bootstrap";
 import AuthClient, { RegisterData } from "../services/auth-service";
 import { uploadImg } from "../services/upload-service";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { GoogleLogin } from "@react-oauth/google";
-import { CredentialResponse } from "@react-oauth/google";
+import { GoogleLogin, CredentialResponse } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 
-const googleResponseMessage = (credentialResponse: CredentialResponse) => {
-  console.log("Google Response Error");
-  console.log(credentialResponse);
+const authGoogleLogin = () => {
+  window.location.href = "http://localhost:3003/users/google"; // הפניה ישירה לאימות
 };
 
-const googleErrorMessage = () => {
-  console.log("Google Error");
+const googleResponseMessage = async (
+  credentialResponse: CredentialResponse,
+  navigate: ReturnType<typeof useNavigate>
+) => {
+  if (credentialResponse.credential) {
+    try {
+      console.log("Received Google Credential:", credentialResponse);
+      authGoogleLogin(); // הפניה להתחברות ישירה דרך Google
+      navigate("/");
+    } catch (error) {
+      console.error("Google Authentication Failed:", error);
+    }
+  }
 };
 
 const schema = z.object({
@@ -55,9 +63,7 @@ const RegisterForm: FC = () => {
     }
   };
 
-  const handleClick = () => {
-    hiddenFileInput.current?.click();
-  };
+  const handleClick = () => hiddenFileInput.current?.click();
 
   const handleRemoveImage = () => {
     setFile(null);
@@ -90,79 +96,18 @@ const RegisterForm: FC = () => {
   };
 
   return (
-    <div
-      style={{
-        fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif",
-        margin: 0,
-        padding: 0,
-        background: "linear-gradient(135deg, #d0eaff, #f7d6f9, #fff4c2)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-      }}
-    >
-      <div
-        style={{
-          width: "50%",
-          maxWidth: "700px",
-          background: "#ffffff",
-          padding: "40px 30px",
-          borderRadius: "12px",
-          boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
-          textAlign: "center",
-        }}
-      >
+    <div className="register-container">
+      <div className="register-card">
         <div style={{ marginBottom: "30px" }}>
-        <Logo />
+          <Logo />
         </div>
 
         <div className="d-flex justify-content-center position-relative">
-          <div
-            style={{
-              height: "200px",
-              width: "200px",
-              borderRadius: "50%",
-              overflow: "hidden",
-              position: "relative",
-              border: "2px solid #ccc",
-              marginBottom: "60px",
-            }}
-          >
-            <img
-              style={{ height: "100%", width: "100%" }}
-              src={imageSrc}
-              alt="profile"
-            />
+          <div className="profile-image-container">
+            <img className="profile-image" src={imageSrc} alt="profile" />
           </div>
-          <Dropdown
-            className="position-absolute"
-            style={{
-              bottom: "5px",
-              left: "59%",
-              zIndex: 10,
-              marginBottom: "60px",
-            }}
-          >
-            <Dropdown.Toggle
-              bsPrefix="custom-dropdown-toggle"
-              variant="light"
-              id="dropdown-basic"
-              className="btn border border-dark shadow-lg"
-              style={{
-                backgroundColor: "rgba(255, 255, 255, 0.95)",
-                color: "gray",
-                borderRadius: "50%",
-                fontSize: "1.1rem",
-                width: "45px",
-                height: "45px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.4)",
-                transition: "all 0.3s ease-in-out",
-              }}
-            >
+          <Dropdown className="position-absolute dropdown-edit">
+            <Dropdown.Toggle variant="light" id="dropdown-basic" className="dropdown-toggle-btn">
               <FontAwesomeIcon icon={faPen} />
             </Dropdown.Toggle>
             <Dropdown.Menu align="end">
@@ -171,10 +116,7 @@ const RegisterForm: FC = () => {
                 Upload New Photo
               </Dropdown.Item>
               {file && (
-                <Dropdown.Item
-                  onClick={handleRemoveImage}
-                  className="text-danger"
-                >
+                <Dropdown.Item onClick={handleRemoveImage} className="text-danger">
                   Remove Photo
                 </Dropdown.Item>
               )}
@@ -182,95 +124,21 @@ const RegisterForm: FC = () => {
           </Dropdown>
         </div>
 
-        <input
-          type="file"
-          {...register("picture")}
-          onChange={handleChange}
-          ref={hiddenFileInput}
-          style={{ display: "none" }}
-        />
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="d-flex flex-column gap-2  justify-content-center"
-          style={{ width: "70%", margin: "auto" }}
-        >
-          <div style={{ marginBottom: "20px" }}>
-            <input
-              type="email"
-              {...register("email", { required: "Email is required" })}
-              id="email"
-              placeholder="Enter your email"
-              style={{
-                width: "95%",
-                padding: "12px",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-              }}
-            />
-            {formState.errors.email && (
-              <span className="text-danger">
-                {formState.errors.email.message}
-              </span>
-            )}
-          </div>
-          <div style={{ marginBottom: "20px" }}>
-            <input
-              type="text"
-              {...register("Username", { required: "Username is required" })}
-              id="username"
-              placeholder="Choose a username"
-              style={{
-                width: "95%",
-                padding: "12px",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-              }}
-            />
-            {formState.errors.Username && (
-              <span className="text-danger">
-                {formState.errors.Username.message}
-              </span>
-            )}
-          </div>
-          <div style={{ marginBottom: "20px" }}>
-            <input
-              type="password"
-              {...register("Password", { required: "Password is required" })}
-              id="password"
-              placeholder="Enter a password"
-              style={{
-                width: "95%",
-                padding: "12px",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-              }}
-            />
-            {formState.errors.Password && (
-              <span className="text-danger">
-                {formState.errors.Password.message}
-              </span>
-            )}
-          </div>
-          
-          <button
-            type="submit"
-            style={{
-              width: "100%",
-              padding: "14px",
-              backgroundColor: "#007bff",
-              color: "white",
-              border: "none",
-              borderRadius: "8px",
-             
-            }}
-          >
-          Sign Up
-          </button>
-          <GoogleLogin
-            onSuccess={googleResponseMessage}
-            onError={googleErrorMessage}
-           
-          />
+        <input type="file" {...register("picture")} onChange={handleChange} ref={hiddenFileInput} style={{ display: "none" }} />
+
+        <form onSubmit={handleSubmit(onSubmit)} className="register-form">
+          <input type="email" {...register("email")} placeholder="Enter your email" className="input-field" />
+          {formState.errors.email && <span className="error-text">{formState.errors.email.message}</span>}
+
+          <input type="text" {...register("Username")} placeholder="Choose a username" className="input-field" />
+          {formState.errors.Username && <span className="error-text">{formState.errors.Username.message}</span>}
+
+          <input type="password" {...register("Password")} placeholder="Enter a password" className="input-field" />
+          {formState.errors.Password && <span className="error-text">{formState.errors.Password.message}</span>}
+
+          <button type="submit" className="submit-btn">Sign Up</button>
+
+          <GoogleLogin onSuccess={(credentialResponse) => googleResponseMessage(credentialResponse, navigate)} onError={() => console.log("Google Authentication Error")} />
         </form>
       </div>
     </div>

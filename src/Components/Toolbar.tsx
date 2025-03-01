@@ -21,7 +21,7 @@ const Toolbar: React.FC = () => {
         
           <Logo />
        
-        <span>Clothing Store</span>
+        <span> Store</span>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
         <Link to="/create-item" style={{ textDecoration: "none" }}>

@@ -42,7 +42,7 @@ const ProfilePage: React.FC = () => {
             alt="Logo"
             style={{ width: '40px', height: '40px', borderRadius: '8px' }}
           />
-          <span>Clothing Store</span>
+          <span>ing Store</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
           <button style={{ padding: '10px 15px', background: 'linear-gradient(135deg, #ff7eb3, #ff758c)', color: 'white', borderRadius: '20px', border: 'none' }}>
