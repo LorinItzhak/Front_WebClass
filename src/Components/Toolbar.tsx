@@ -18,9 +18,7 @@ const Toolbar: React.FC = () => {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        
-          <Logo />
-       
+        <Logo />
         <span> Store</span>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
@@ -35,6 +33,19 @@ const Toolbar: React.FC = () => {
             }}
           >
             Create New Item
+          </button>
+        </Link>
+        <Link to="/register" style={{ textDecoration: "none" }}>
+          <button
+            style={{
+              padding: "10px 15px",
+              background: "linear-gradient(135deg, #57cc99, #38a3a5)",
+              color: "white",
+              borderRadius: "20px",
+              border: "none",
+            }}
+          >
+            Sign Up
           </button>
         </Link>
         <Link to="/profile" style={{ textDecoration: "none" }}>
