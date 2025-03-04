@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 
+
 const Toolbar: React.FC = () => {
   return (
     <div
@@ -19,14 +20,14 @@ const Toolbar: React.FC = () => {
     >
       <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <Logo />
-        <span> Store</span>
+        
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
         <Link to="/create-item" style={{ textDecoration: "none" }}>
           <button
             style={{
               padding: "10px 15px",
-              background: "linear-gradient(135deg, #ff7eb3, #ff758c)",
+              background: "linear-gradient(135deg,rgb(145, 87, 204), #38a3a5)",
               color: "white",
               borderRadius: "20px",
               border: "none",
@@ -35,42 +36,44 @@ const Toolbar: React.FC = () => {
             Create New Item
           </button>
         </Link>
-        <Link to="/register" style={{ textDecoration: "none" }}>
+        <Link to="/login" style={{ textDecoration: "none" }}>
           <button
             style={{
               padding: "10px 15px",
-              background: "linear-gradient(135deg, #57cc99, #38a3a5)",
+              background: "linear-gradient(135deg,rgb(145, 87, 204), #38a3a5)",
               color: "white",
               borderRadius: "20px",
               border: "none",
             }}
           >
-            Sign Up
+            Sign In
           </button>
         </Link>
         <Link to="/profile" style={{ textDecoration: "none" }}>
-          <div
+          <button
             style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-              backgroundColor: "#f0f0f0",
-              cursor: "pointer",
+              padding: "10px 15px",
+              background: "linear-gradient(135deg,rgb(145, 87, 204), #38a3a5)",
+              color: "white",
+              borderRadius: "20px",
+              border: "none",
             }}
             title="Go to Profile"
-          />
+          >Profile
+            </button>
         </Link>
         <Link to="/" style={{ textDecoration: "none" }}>
-          <div
+          <button
             style={{
-              width: "40px",
-              height: "40px",
-              borderRadius: "50%",
-              backgroundColor: "#f0f0f0",
-              cursor: "pointer",
+              padding: "10px 15px",
+              background: "linear-gradient(135deg,rgb(145, 87, 204), #38a3a5)",
+              color: "white",
+              borderRadius: "20px",
+              border: "none",
             }}
             title="Home"
-          />
+          >Home
+          </button>
         </Link>
       </div>
     </div>

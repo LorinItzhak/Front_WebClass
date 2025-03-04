@@ -22,36 +22,7 @@ const ProfilePage: React.FC = () => {
         color: '#333',
       }}
     >
-      {/* Toolbar */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          background: '#ffffff',
-          padding: '10px 20px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-          position: 'sticky',
-          top: 0,
-          zIndex: 10,
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <img
-            src="https://static.vecteezy.com/system/resources/previews/008/845/330/non_2x/funny-cartoon-character-rainbow-png.png"
-            alt="Logo"
-            style={{ width: '40px', height: '40px', borderRadius: '8px' }}
-          />
-          <span>ing Store</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <button style={{ padding: '10px 15px', background: 'linear-gradient(135deg, #ff7eb3, #ff758c)', color: 'white', borderRadius: '20px', border: 'none' }}>
-            Create New Item
-          </button>
-          <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#f0f0f0' }} title="View Purchase History"></div>
-          <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#f0f0f0' }} title="Go to Profile"></div>
-        </div>
-      </div>
+      
 
       {/* Profile Container */}
       <div style={{ maxWidth: '800px', margin: '30px auto', background: '#ffffff', padding: '30px', borderRadius: '12px', boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)' }}>

@@ -1,6 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import RegisterForm from "./RegisterForm";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "./Logo";
 
 const LoginPage: React.FC = () => {
@@ -16,9 +15,7 @@ const LoginPage: React.FC = () => {
     alert("Google Login Clicked!");
   };
   
-  const goToSignUp = () =>{
-    return <RegisterForm/>
-  }
+
   return (
     <div
       style={{
@@ -140,17 +137,24 @@ const LoginPage: React.FC = () => {
             fontSize: "0.9em",
           }}
         >
-          Don't have an account?{" "}
-          <span
-            onClick={goToSignUp}
+          Don't have an account ?
+          <Link to="/register" style={{ textDecoration: "none" }}>
+          <button
             style={{
-              color: "#007bff",
+              padding: "10px 10px",
+              background: "none",
+              color: "007bff",
               textDecoration: "underline",
-              cursor: "pointer",
+              borderRadius: "20px",
+              border: "none",
             }}
-          >
-            Sign up here
-          </span>
+            title="Sign up here"
+          >Sign up here
+            </button>
+        </Link>
+         
+            
+     
         </div>
       </div>
     </div>

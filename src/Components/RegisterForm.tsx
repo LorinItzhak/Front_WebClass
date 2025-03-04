@@ -70,11 +70,36 @@ const RegisterForm: FC = () => {
     setImageSrc(avatarImg);
   };
 
+ 
+  
+  
+
+  const checkUserExists = async (email: string, username: string) => {
+    try {
+      const response = await fetch(`http://localhost:3003/users/check?email=${encodeURIComponent(email)}&username=${encodeURIComponent(username)}`);
+  
+      if (!response.ok) {
+        console.error("Error checking user existence: ", response.statusText);
+        return false;
+      }
+  
+      const data = await response.json();
+      return data.exists;
+    } catch (error) {
+      console.error("Error checking user existence:", error);
+      return false;
+    }
+  };
+  
   const onSubmit = async (data: FormData) => {
-    console.log(data);
+    const userExists = await checkUserExists(data.email, data.Username);
+    if (userExists) {
+      alert("Email or username already exists. Please choose another one.");
+      return;
+    }
+  
     try {
       const imgUrl = file ? await uploadImg(file) : avatarImg;
-      setImageSrc(imgUrl);
       const regData: RegisterData = {
         email: data.email,
         password: data.Password,
@@ -94,7 +119,7 @@ const RegisterForm: FC = () => {
       console.log(error);
     }
   };
-
+  
   return (
     <div
     style={{
